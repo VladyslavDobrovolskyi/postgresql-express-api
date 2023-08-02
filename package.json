@@ -1,0 +1,29 @@
+{
+  "name": "postgresql-express-api",
+  "version": "1.0.0",
+  "description": "PostgreSQL api ",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/VladyslavDobrovolskyi/postgresql-express-api.git"
+  },
+  "author": "Vladyslav Dobrovolskyi",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/VladyslavDobrovolskyi/postgresql-express-api/issues"
+  },
+  "homepage": "https://github.com/VladyslavDobrovolskyi/postgresql-express-api#readme",
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  },
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "express-validator": "^7.0.1",
+    "pg": "^8.11.2"
+  }
+}
