@@ -1,17 +1,33 @@
+const db = require('../helpers/db-connect')
+const UserService = require('../services/user-service')
+
 class UserController {
   async getUsers(req, res) {
     try {
-    } catch (error) {}
+      const users = await UserService.getUsers()
+      res.json(users)
+    } catch (error) {
+      console.log(error.message)
+    }
   }
 
-  async getUserById() {
+  async getUserById(req, res) {
     try {
-    } catch (error) {}
+      const { id } = req.params
+      const users = await UserService.getUserById(id)
+      res.json(users)
+    } catch (error) {
+      console.log(error.message)
+    }
   }
 
-  async createUser() {
+  async createUser(req, res) {
     try {
-    } catch (error) {}
+      const newUser = await UserService.createUser(req.body)
+      res.json({ success: true, newUser })
+    } catch (error) {
+      console.log(error.message)
+    }
   }
 }
 
