@@ -7,6 +7,7 @@ const TokenRouter = require('./routes/token-router')
 const UserRouter = require('./routes/user-router')
 const PositionRouter = require('./routes/position-router')
 
+app.use(express.static('public'))
 app.use(express.json())
 
 app.use('/token', TokenRouter)

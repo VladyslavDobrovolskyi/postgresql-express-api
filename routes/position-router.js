@@ -1,4 +1,4 @@
-const PositionController = require('../controllers/position-controller')
+const PositionController = require('../controllers/position-Controller')
 const Router = require('express').Router
 const router = new Router()
 
