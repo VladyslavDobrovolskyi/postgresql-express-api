@@ -1,4 +1,3 @@
-const db = require('../helpers/db-connect')
 const UserService = require('../services/user-service')
 
 class UserController {

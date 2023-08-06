@@ -1,4 +1,4 @@
-const TokenController = require('../controllers/token-controller')
+const TokenController = require('../controllers/token-Controller')
 const Router = require('express').Router
 const router = new Router()
 
