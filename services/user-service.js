@@ -16,7 +16,7 @@ class UserService {
     return CreatedUserData.rows[0]
   }
   async getUsers() {
-    const FetchedUsersData = await db.query(`SELECT
+    const fetchedUsersData = await db.query(`SELECT
     users.id,
     users.name,
     users.email,
@@ -28,10 +28,10 @@ class UserService {
   FROM
     users
     JOIN positions ON users.position_id = positions.id`)
-    return FetchedUsersData.rows
+    return fetchedUsersData.rows
   }
   async getUserById(id) {
-    const FetchedUserData = await db.query(
+    const fetchedUserData = await db.query(
       `SELECT
     users.id,
     users.name,
@@ -46,7 +46,7 @@ class UserService {
   WHERE
     users.id = ${id};`
     )
-    return FetchedUserData.rows[0]
+    return fetchedUserData.rows[0]
   }
 }
 
