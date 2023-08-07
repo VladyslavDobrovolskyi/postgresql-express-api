@@ -20,7 +20,9 @@ const upload = multer({
     if (allowedExtensions.includes(ext)) {
       callback(null, true)
     } else {
-      callback(new Error())
+      callback(
+        new Error('The accepted format for the file is not .jpg or .jpeg.')
+      )
     }
   },
 })
