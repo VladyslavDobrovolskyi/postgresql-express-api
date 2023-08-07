@@ -5,9 +5,7 @@ const UserController = require('../controllers/user-Controller')
 
 const imageUploadMiddleware = require('../middlewares/image-upload-Middleware')
 const imageSaveMiddleware = require('../middlewares/image-save-Middleware')
-const errorHandler = require('../middlewares/error-handler-Middleware')
 const validationMiddleware = require('../middlewares/validation-Middleware')
-const upload = require('../middlewares/image-upload-Middleware')
 
 router.get('/', UserController.getUsers)
 router.get('/:id', UserController.getUserById)
@@ -16,7 +14,6 @@ router.post('/', [
   validationMiddleware,
   imageSaveMiddleware(),
   UserController.createUser,
-  errorHandler,
 ])
 
 module.exports = router
