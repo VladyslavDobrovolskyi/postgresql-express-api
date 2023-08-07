@@ -4,16 +4,16 @@ const router = new Router()
 const UserController = require('../controllers/user-Controller')
 
 const imageUploadMiddleware = require('../middlewares/image-upload-Middleware')
-const imageRenameMiddleware = require('../middlewares/image-rename-Middleware')
-const errorHandler = require('../middlewares/error-handler-Middleware')
+const imageSaveMiddleware = require('../middlewares/image-save-Middleware')
+const validationMiddleware = require('../middlewares/validation-Middleware')
 
 router.get('/', UserController.getUsers)
 router.get('/:id', UserController.getUserById)
 router.post('/', [
-  imageUploadMiddleware.single('photo'),
-  imageRenameMiddleware,
+  imageUploadMiddleware,
+  validationMiddleware,
+  imageSaveMiddleware(),
   UserController.createUser,
-  errorHandler,
 ])
 
 module.exports = router
