@@ -14,8 +14,8 @@ router.get('/:id', UserController.getUserById)
 router.post('/', [
   //upload.none(),
   imageUploadMiddleware.single('photo'),
-  imageRenameMiddleware,
   validationMiddleware,
+  imageRenameMiddleware,
   UserController.createUser,
   errorHandler,
 ])

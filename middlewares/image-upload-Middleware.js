@@ -12,23 +12,6 @@ const storage = multer.diskStorage({
 
 const upload = multer({
   storage: storage,
-  fileFilter: function (req, file, callback) {
-    if (!file) {
-      // Если файл отсутствует, вызываем ошибку
-      return cb(new Error('The file failed to upload.'), false)
-    }
-    const allowedExtensions = ['.jpg', '.jpeg']
-    const ext = file.originalname
-      .toLowerCase()
-      .substring(file.originalname.lastIndexOf('.'))
-    if (allowedExtensions.includes(ext)) {
-      callback(null, true)
-    } else {
-      callback(
-        new Error('The accepted format for the file is not .jpg or .jpeg.')
-      )
-    }
-  },
 })
 
 module.exports = upload
