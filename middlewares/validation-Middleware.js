@@ -40,8 +40,6 @@ const validateFields = [
       .substring(req.file.originalname.lastIndexOf('.'))
     const mimeType = req.file.mimetype
 
-    console.log([fileExtension, mimeType, req.file.size])
-
     if (!allowedExtensions.includes(fileExtension)) {
       throw new Error('The photo should be in JPG/JPEG format.')
     }
@@ -51,20 +49,18 @@ const validateFields = [
     if (req.file.size > allowedSize) {
       throw new Error('The photo size must not exceed 5MB.')
     }
-    console.log(req.file.buffer)
-    // const image = sharp(req.file.buffer)
-    // console.log(image)
-    // const metadata = await image.metadata()
-    // const maxWidth = 84
-    // const maxHeight = 84
-    // const imageWidth = metadata.width
-    // const imageHeight = metadata.height
+    const image = sharp(req.file.buffer)
+    const metadata = await image.metadata()
+    const maxWidth = 84
+    const maxHeight = 84
+    const imageWidth = metadata.width
+    const imageHeight = metadata.height
 
-    // if (imageWidth > maxWidth || imageHeight > maxHeight) {
-    //   throw new Error(
-    //     `The photo dimensions must be ${maxWidth}x${maxHeight} pixels.`
-    //   )
-    // }
+    if (imageWidth > maxWidth || imageHeight > maxHeight) {
+      throw new Error(
+        `The photo dimensions must be ${maxWidth}x${maxHeight} pixels.`
+      )
+    }
 
     return true
   }),
