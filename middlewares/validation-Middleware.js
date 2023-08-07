@@ -86,3 +86,5 @@ const validateFields = [
 ]
 
 module.exports = validateFields
+
+//TODO Проверка на сущесвование пользователя и уникальность номера
