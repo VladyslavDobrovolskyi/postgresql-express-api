@@ -6,7 +6,7 @@ function validateToken(req, res, next) {
   if (!token) {
     return res
       .status(401)
-      .json({ success: 'false', message: 'Token is required.' })
+      .json({ success: false, message: 'Token is required.' })
   }
 
   try {
@@ -16,7 +16,7 @@ function validateToken(req, res, next) {
   } catch (error) {
     return res
       .status(401)
-      .json({ success: 'false', message: 'Token is expired.' })
+      .json({ success: false, message: 'Token is expired.' })
   }
 }
 
