@@ -12,12 +12,35 @@ class UserController {
   }
 
   async getUserById(req, res) {
+    const { id } = req.params
+    const isNumber = Number.isInteger(Number(id))
+    if (!isNumber) {
+      return res.status(400).json({
+        success: false,
+        message: 'Validation failed',
+        fails: {
+          user_id: ['The user_id must be an integer.'],
+        },
+      })
+    }
     try {
-      const { id } = req.params
       const user = await UserService.getUserById(id)
-      res.json({ success: 'true', user: user })
+      if (user) {
+        res.status(200).json({ success: true, user })
+      } else {
+        res.status(404).json({
+          success: false,
+          message: 'The user with the requested identifier does not exist',
+          fails: {
+            user_id: ['User not found.'],
+          },
+        })
+      }
     } catch (error) {
-      console.log(error.message) // TODO Internal Server Error
+      res.status(500).json({
+        success: false,
+        message: 'Internal Server Error.',
+      })
     }
   }
 
