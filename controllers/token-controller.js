@@ -6,7 +6,7 @@ class TokenController {
       const token = await TokenService.generateToken()
       res.json({ success: 'true', token })
     } catch (error) {
-      console.log(error.message)
+      console.log(error.message) // TODO Internal Server Error
     }
   }
 }
