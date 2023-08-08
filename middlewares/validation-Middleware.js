@@ -15,6 +15,9 @@ const validateFields = [
     ),
 
   check('phone').custom(value => {
+    if (!value) {
+      throw new Error('The phone number is required.')
+    }
     if (!value.startsWith('+380')) {
       throw new Error(
         'The phone number should start with the code of Ukraine (+380).'
@@ -33,7 +36,7 @@ const validateFields = [
 
     const allowedExtensions = ['.jpg', '.jpeg']
     const allowedMimeTypes = ['image/jpeg']
-    const allowedSize = 5 * 1024 * 1024 // 5MB
+    const allowedSize = 5 * 1024 * 1024
 
     const fileExtension = req.file.originalname
       .toLowerCase()

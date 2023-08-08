@@ -12,7 +12,7 @@ app.use(express.json())
 
 app.use('/token', TokenRouter)
 app.use('/users', UserRouter)
-app.use('/position', PositionRouter)
+app.use('/positions', PositionRouter)
 
 app.listen(PORT, error => {
   error

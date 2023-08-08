@@ -1,7 +1,13 @@
+const PositionService = require('../services/position-service')
+
 class PositionController {
-  async getPositions() {
+  async getPositions(req, res) {
     try {
-    } catch (error) {}
+      const positions = await PositionService.getPositions()
+      res.json({ success: 'true', posistions: positions })
+    } catch (error) {
+      res.json({ error: error.message })
+    }
   }
 }
 

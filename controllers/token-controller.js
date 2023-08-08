@@ -1,7 +1,13 @@
+const TokenService = require('../services/token-service')
+
 class TokenController {
   async getToken(req, res) {
     try {
-    } catch (error) {}
+      const token = await TokenService.generateToken()
+      res.json({ success: 'true', token })
+    } catch (error) {
+      console.log(error.message) // TODO Internal Server Error
+    }
   }
 }
 
