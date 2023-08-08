@@ -1,4 +1,5 @@
 const UserService = require('../services/user-service')
+const TokenService = require('../services/token-service')
 
 class UserController {
   async getUsers(req, res) {
@@ -6,7 +7,7 @@ class UserController {
       const users = await UserService.getUsers()
       res.json(users)
     } catch (error) {
-      console.log(error.message)
+      console.log(error.message) // TODO Internal Server Error
     }
   }
 
@@ -16,7 +17,7 @@ class UserController {
       const user = await UserService.getUserById(id)
       res.json({ success: 'true', user: user })
     } catch (error) {
-      console.log(error.message)
+      console.log(error.message) // TODO Internal Server Error
     }
   }
 
@@ -29,9 +30,8 @@ class UserController {
         message: 'New user successfully registered',
       })
     } catch (error) {
-      console.log(error.message)
+      console.log(error.message) // TODO Internal Server Error
     }
   }
 }
-
 module.exports = new UserController()

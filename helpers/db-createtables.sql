@@ -14,4 +14,9 @@ CREATE TABLE users (
   FOREIGN KEY (position_id) REFERENCES positions(id)
 );
 
+CREATE TABLE tokens (
+  token VARCHAR(255),
+  expiredIn DEFAULT(DATE_ADD(NOW(), INTERVAL 40 MINUTE))
+);
+
 
