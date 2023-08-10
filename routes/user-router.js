@@ -8,8 +8,15 @@ const uniqueEmailNumberMiddleware = require('../middlewares/uniqueEmailNumber-Mi
 const imageUploadMiddleware = require('../middlewares/image-upload-Middleware')
 const imageSaveMiddleware = require('../middlewares/image-save-Middleware')
 const validationMiddleware = require('../middlewares/validation-Middleware')
+const paginationMiiddleware = require('../middlewares/pagination-Middleware')
+const pagValidationMiddleware = require('../middlewares/pagvalidation-Middleware')
 
-router.get('/', UserController.getUsers)
+router.get(
+  '/',
+  pagValidationMiddleware,
+  paginationMiiddleware,
+  UserController.getUsers
+)
 router.get('/:id', UserController.getUserById)
 router.post('/', [
   tokenMiddleware,
