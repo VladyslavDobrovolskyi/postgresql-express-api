@@ -95,8 +95,8 @@ class UserService {
     users.name,
     users.email,
     users.phone,
-    positions.name AS position,
     positions.id AS position_id,
+    positions.name AS position,
     users.photo
   FROM
     users
