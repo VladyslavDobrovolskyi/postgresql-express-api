@@ -3,8 +3,9 @@ const TokenService = require('../services/token-service')
 
 class UserController {
   async getUsers(req, res) {
+    const { count, offset, page } = req.pagination
     try {
-      const users = await UserService.getUsers()
+      const users = await UserService.getUsers(count, offset, page)
       res.json(users)
     } catch (error) {
       console.log(error.message) // TODO Internal Server Error
