@@ -8,14 +8,14 @@ async function uniqueEmailNumber(req, res, next) {
       [email, phone]
     )
     if (user.rowCount > 0) {
-      res.status(409).json({
+      return res.status(409).json({
         success: false,
         message: 'User with this phone or email already exist',
       })
     }
   } catch (error) {
     console.error('Error executing query', error)
-    res.status(500).json({
+    return res.status(500).json({
       error: 'Internal Server Error',
     })
   }
