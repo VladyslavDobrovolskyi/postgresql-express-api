@@ -11,7 +11,7 @@ class PositionController {
           message: 'Positions not found.',
         })
     } catch (error) {
-      res.json({ error: error.message })
+      res.json({ error: error.message }) //?
     }
   }
 }
