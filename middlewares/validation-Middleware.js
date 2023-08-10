@@ -54,8 +54,8 @@ const validateFields = [
     }
     const image = sharp(req.file.buffer)
     const metadata = await image.metadata()
-    const maxWidth = 84
-    const maxHeight = 84
+    const maxWidth = 84 //? 70
+    const maxHeight = 84 //? 70
     const imageWidth = metadata.width
     const imageHeight = metadata.height
 
