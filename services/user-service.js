@@ -7,7 +7,7 @@ class UserService {
     phone,
     position_id,
     photo,
-    registration_timestamp = Date.now(),
+    registration_timestamp = parseInt(Date.now().toString().slice(0, 10)),
   }) {
     const CreatedUserData = await db.query(
       `INSERT INTO users (name, email, phone, position_id, photo, registration_timestamp) VALUES ($1,$2,$3,$4,$5,$6) RETURNING *`,
@@ -45,7 +45,20 @@ class UserService {
       }
 
       const result = await db.query(
-        `SELECT * FROM users ORDER BY registration_timestamp ASC LIMIT $1 OFFSET $2`,
+        `SELECT
+      users.id,
+      users.name,
+      users.email,
+      users.phone,
+      positions.name AS position,
+      positions.id AS position_id,
+      registration_timestamp,
+      users.photo
+    FROM
+      users
+      JOIN positions ON users.position_id = positions.id
+    ORDER BY registration_timestamp ASC
+    LIMIT $1 OFFSET $2`,
         [count, offset ? offset : startIndex]
       )
 
