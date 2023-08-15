@@ -67,4 +67,4 @@ async function getToken() {
   }
 }
 
-module.exports = generateAndCreateUsers
+generateAndCreateUsers(1)
