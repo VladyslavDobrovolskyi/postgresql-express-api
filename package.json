@@ -18,6 +18,9 @@
   },
   "homepage": "https://github.com/VladyslavDobrovolskyi/postgresql-express-api#readme",
   "devDependencies": {
+    "@faker-js/faker": "^8.0.2",
+    "axios": "^1.4.0",
+    "form-data": "^4.0.0",
     "nodemon": "^3.0.1"
   },
   "dependencies": {
