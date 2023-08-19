@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
+    "test": "jest",
     "create-user": "node ./helpers/users-generation.js"
   },
   "repository": {
@@ -22,7 +23,9 @@
     "@faker-js/faker": "^8.0.2",
     "axios": "^1.4.0",
     "form-data": "^4.0.0",
-    "nodemon": "^3.0.1"
+    "jest": "^29.6.2",
+    "nodemon": "^3.0.1",
+    "supertest": "^6.3.3"
   },
   "dependencies": {
     "dotenv": "^16.3.1",
