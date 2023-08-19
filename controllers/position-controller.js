@@ -4,7 +4,7 @@ class PositionController {
   async getPositions(req, res) {
     try {
       const positions = await PositionService.getPositions()
-      if (positions) res.json({ success: 'true', posistions: positions })
+      if (positions) res.json({ success: true, positions: positions })
       else
         res.status(404).json({
           success: false,
