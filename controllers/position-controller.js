@@ -4,14 +4,15 @@ class PositionController {
   async getPositions(req, res) {
     try {
       const positions = await PositionService.getPositions()
-      if (positions) res.json({ success: true, positions: positions })
+      if (positions.length > 0)
+        res.json({ success: true, positions: positions })
       else
-        res.status(404).json({
+        res.status(422).json({
           success: false,
           message: 'Positions not found.',
         })
     } catch (error) {
-      res.json({ error: error.message }) //?
+      res.status(404).json({ success: false, message: error.message }) //?
     }
   }
 }

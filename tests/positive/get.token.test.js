@@ -1,6 +1,6 @@
 const request = require('supertest')
 const app = 'http://localhost:3000'
-describe('/token', () => {
+describe('[GET] /token', () => {
   test('Status code is 200', async () => {
     const response = await request(app).get('/token')
     expect(response.status).toBe(200)

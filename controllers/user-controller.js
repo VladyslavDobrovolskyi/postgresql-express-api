@@ -6,6 +6,9 @@ class UserController {
     const { count, offset, page } = req.pagination
     try {
       const users = await UserService.getUsers(count, offset, page)
+      if (users.success == false) {
+        res.status(404)
+      }
       res.json(users)
     } catch (error) {
       console.log(error.message) // TODO Internal Server Error
@@ -31,7 +34,7 @@ class UserController {
       } else {
         res.status(404).json({
           success: false,
-          message: 'The user with the requested identifier does not exist',
+          message: 'The user with the requested identifier does not exist.',
           fails: {
             user_id: ['User not found.'],
           },

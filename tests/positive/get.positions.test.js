@@ -1,7 +1,7 @@
 const request = require('supertest')
 const app = 'http://localhost:3000'
 
-describe('/positions', () => {
+describe('[GET] /positions', () => {
   test('Status code is 200', async () => {
     const response = await request(app).get('/positions')
     expect(response.statusCode).toBe(200)

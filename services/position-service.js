@@ -7,7 +7,7 @@ class PositionService {
       return fetchedPositionsData.rows
     } catch (error) {
       console.error('Failed to fetch positions:', error)
-      throw new Error('Failed to fetch positions from the database.') //?
+      throw new Error('Page not found.') //?
     }
   }
 }

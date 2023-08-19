@@ -39,7 +39,7 @@ const generateUser = async () => {
   return response
 }
 
-describe('/users [POST]', () => {
+describe('[POST] /users', () => {
   test('Status code is 200', async () => {
     const response = await generateUser()
     expect(response.statusCode).toBe(200)
