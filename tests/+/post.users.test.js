@@ -1,6 +1,7 @@
 const request = require('supertest')
 const { faker } = require('@faker-js/faker')
 const axios = require('axios')
+const app = 'http://localhost:3000'
 
 const generateUser = async () => {
   const name = faker.person.firstName()
@@ -21,12 +22,12 @@ const generateUser = async () => {
     photo,
   }
 
-  const tokenResponse = await request('http://localhost:3000').get('/token')
+  const tokenResponse = await request(app).get('/token')
   const token = tokenResponse.body.token
 
   const photoStream = await axios.get(data.photo, { responseType: 'stream' })
 
-  const response = await request('http://localhost:3000')
+  const response = await request(app)
     .post('/users')
     .set('Token', token)
     .attach('photo', photoStream.data, { filename: 'photo.jpg' })
