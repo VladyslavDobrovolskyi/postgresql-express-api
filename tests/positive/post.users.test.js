@@ -40,33 +40,19 @@ const generateUser = async () => {
 }
 
 describe('[POST] /users', () => {
-  test('Status code is 200', async () => {
+  test('Validating /users endpoint response', async () => {
     const response = await generateUser()
-    expect(response.statusCode).toBe(200)
-  })
+    const responseBody = response.body
 
-  test('Content-Type is application/json', async () => {
-    const response = await generateUser()
+    expect(response.status).toBe(200)
+
     const contentType = response.headers['content-type']
     expect(contentType).toContain('application/json')
-  })
 
-  test("Has 'success' in response body", async () => {
-    const response = await generateUser()
-    const responseBody = response.body
     expect(responseBody.success).toBeDefined()
-  })
-
-  test('Success status is true', async () => {
-    const response = await generateUser()
-    const responseBody = response.body
     const successStatus = responseBody.success
     expect(successStatus).toBe(true)
-  })
 
-  test('Response has [user_id, message: "New user successfully registered"]', async () => {
-    const response = await generateUser()
-    const responseBody = response.body
     expect(responseBody).toHaveProperty('user_id')
     expect(responseBody).toHaveProperty(
       'message',

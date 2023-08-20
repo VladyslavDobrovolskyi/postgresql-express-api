@@ -1,10 +1,9 @@
 const request = require('supertest')
 const app = 'http://localhost:3000'
-const Invalid_Data = ['Not_integer', 0]
 
 describe('[GET] users/:id  -> Validation', () => {
   test('The user id must be an integer', async () => {
-    const response = await request(app).get(`/users/${Invalid_Data[0]}`)
+    const response = await request(app).get(`/users/Invalid`)
     expect(response.statusCode).toBe(400)
     expect(response.body.success).toBe(false)
     const contentType = response.headers['content-type']
@@ -21,7 +20,7 @@ describe('[GET] users/:id  -> Validation', () => {
   })
 
   test('The user with the requested identifier does not exist.', async () => {
-    const response = await request(app).get(`/users/${Invalid_Data[1]}`)
+    const response = await request(app).get(`/users/0`)
     expect(response.statusCode).toBe(404)
     expect(response.body.success).toBe(false)
     const contentType = response.headers['content-type']

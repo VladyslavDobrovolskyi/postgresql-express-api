@@ -1,0 +1,98 @@
+const request = require('supertest')
+const { faker } = require('@faker-js/faker')
+const axios = require('axios')
+const app = 'http://localhost:3000'
+
+generateUser = async ({
+  token = 'Generate',
+  name = 'Fake',
+  email = 'Fake',
+  phone = 'Fake',
+  position_id = 'Fake',
+  photo = 'Fake',
+  imageWidth,
+  imageHeight,
+  imageFormat,
+} = {}) => {
+  const userName = name === 'Fake' ? faker.person.firstName() : name
+  const userEmail =
+    email === 'Fake' ? faker.internet.email().toLowerCase() : email
+  const userPhone =
+    phone === 'Fake' ? faker.phone.number('+380#########') : phone
+  const userPosition_id =
+    position_id === 'Fake' ? Math.floor(Math.random() * 4) + 1 : position_id
+  const userPhoto =
+    photo === 'Fake'
+      ? faker.image.urlLoremFlickr({
+          width: imageWidth || 84,
+          height: imageHeight || 84,
+          category: 'abstract',
+        })
+      : photo
+
+  const data = {
+    userName,
+    userEmail,
+    userPhone,
+    userPosition_id,
+    userPhoto,
+  }
+
+  const tokenResponse = await request(app).get('/token')
+  const userToken = token === 'Generate' ? tokenResponse.body.token : token
+
+  const photoStream = userPhoto
+    ? await axios.get(data.userPhoto, {
+        responseType: 'stream',
+      })
+    : ''
+
+  const response = await request(app)
+    .post('/users')
+    .set('Token', userToken)
+    .attach('photo', photoStream.data, {
+      filename: `photo.${imageFormat || 'jpg'}`,
+    })
+    .field('name', data.userName)
+    .field('email', data.userEmail)
+    .field('phone', data.userPhone)
+    .field('position_id', data.userPosition_id)
+
+  return response
+}
+
+describe('[POST] /users (token)', () => {
+  test('Token is expired.', async () => {
+    const expireTokenRequest = await generateUser({
+      token:
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjoxNjkyNTIwMDE5MDU2LCJpYXQiOjE2OTI1MjAwMTksImV4cCI6MTY5MjUyMjQxOX0.xR9nNhuDeS6ePNGdR3I9hDs6YkljEaIRyGugCpSZHWk',
+    })
+    const response = await generateUser({
+      token:
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjoxNjkyNTIwMDE5MDU2LCJpYXQiOjE2OTI1MjAwMTksImV4cCI6MTY5MjUyMjQxOX0.xR9nNhuDeS6ePNGdR3I9hDs6YkljEaIRyGugCpSZHWk',
+    })
+
+    console.log(response.body)
+    expect(response.status).toBe(401)
+
+    expect(JSON.parse(response.text)).toEqual({
+      success: false,
+      message: 'Token is expired.',
+    })
+  })
+})
+describe('[POST] /users (token)', () => {
+  test('Token is required.', async () => {
+    const response = await generateUser({
+      token: '',
+    })
+
+    console.log(response.body)
+    expect(response.status).toBe(401)
+
+    expect(JSON.parse(response.text)).toEqual({
+      success: false,
+      message: 'Token is required.',
+    })
+  })
+})
