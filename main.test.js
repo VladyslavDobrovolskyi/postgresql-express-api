@@ -180,40 +180,6 @@ describe('Negative Testing:', () => {
       expect(response.body).toHaveProperty('message')
       expect(response.body.message).toBe('Page not found')
     })
-    describe('[POST] /users (token)', () => {
-      test('Token is required.', async () => {
-        const response = await generateUser({
-          token: '',
-        })
-
-        console.log(response.body)
-        expect(response.status).toBe(401)
-
-        expect(JSON.parse(response.text)).toEqual({
-          success: false,
-          message: 'Token is required.',
-        })
-      })
-      test('Token is expired.', async () => {
-        const expireTokenRequest = await generateUser({
-          token:
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjoxNjkyNTIwMDE5MDU2LCJpYXQiOjE2OTI1MjAwMTksImV4cCI6MTY5MjUyMjQxOX0.xR9nNhuDeS6ePNGdR3I9hDs6YkljEaIRyGugCpSZHWk',
-        })
-        const response = await generateUser({
-          token:
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjoxNjkyNTIwMDE5MDU2LCJpYXQiOjE2OTI1MjAwMTksImV4cCI6MTY5MjUyMjQxOX0.xR9nNhuDeS6ePNGdR3I9hDs6YkljEaIRyGugCpSZHWk',
-        })
-
-        console.log(response.body)
-        expect(response.status).toBe(401)
-
-        expect(JSON.parse(response.text)).toEqual({
-          success: false,
-          message: 'Token is expired.',
-        })
-      })
-    })
-
     test('The page must be an integer.', async () => {
       const response = await request(app).get(`/users`).query({ page: 'Text' })
       expect(response.statusCode).toBe(422)
@@ -224,90 +190,6 @@ describe('Negative Testing:', () => {
       expect(response.body).toHaveProperty('message')
       expect(response.body.message).toBe('Validation failed')
       expect(response.body.fails.page).toEqual(['The page must be an integer.'])
-    })
-
-    describe('[POST] /users', () => {
-      test('The email must be a valid email address according to RFC2822.', async () => {
-        const response = await generateUser({ email: 'test@mail' })
-        expect(response.status).toBe(422)
-        expect(JSON.parse(response.text)).toEqual({
-          success: false,
-          message: 'Validation failed',
-          fails: {
-            email: [
-              'The email must be a valid email address according to RFC2822.',
-            ],
-          },
-        })
-      })
-      test('The phone number should start with the code of Ukraine (+380).', async () => {
-        const response = await generateUser({ phone: '+385731828194' })
-        expect(response.status).toBe(422)
-        expect(JSON.parse(response.text)).toEqual({
-          success: false,
-          message: 'Validation failed',
-          fails: {
-            phone: [
-              'The phone number should start with the code of Ukraine (+380).',
-            ],
-          },
-        })
-      })
-      test('The phone number is required.', async () => {
-        const response = await generateUser({ phone: '' })
-        expect(response.status).toBe(422)
-        expect(JSON.parse(response.text)).toEqual({
-          success: false,
-          message: 'Validation failed',
-          fails: {
-            phone: ['The phone number is required.'],
-          },
-        })
-      })
-      test('The name must be at least 2 characters.', async () => {
-        const response = await generateUser({ name: 'W' })
-        expect(response.status).toBe(422)
-        expect(JSON.parse(response.text)).toEqual({
-          success: false,
-          message: 'Validation failed',
-          fails: {
-            name: ['The name must be at least 2 characters.'],
-          },
-        })
-      })
-      test('The name must not exceed 60 characters.', async () => {
-        const response = await generateUser({ name: `'A'${'a'.repeat(60)}` })
-        expect(response.status).toBe(422)
-        expect(JSON.parse(response.text)).toEqual({
-          success: false,
-          message: 'Validation failed',
-          fails: {
-            name: ['The name must not exceed 60 characters.'],
-          },
-        })
-      })
-      test('The position id must be an integer.', async () => {
-        const response = await generateUser({ position_id: 'Security' })
-        expect(response.status).toBe(422)
-        expect(JSON.parse(response.text)).toEqual({
-          success: false,
-          message: 'Validation failed',
-          fails: {
-            position_id: ['The position id must be an integer.'],
-          },
-        })
-      })
-      test('The photo is required.', async () => {
-        const response = await generateUser({ photo: '' })
-        expect(response.status).toBe(422)
-        expect(JSON.parse(response.text)).toEqual({
-          success: false,
-          message: 'Validation failed',
-          fails: {
-            photo: ['The photo is required.'],
-          },
-        })
-      })
     })
     test('The page must be at least 1.', async () => {
       const response = await request(app).get(`/users`).query({ page: 0 })
@@ -363,61 +245,242 @@ describe('Negative Testing:', () => {
       ])
     })
   })
-  describe('[GET] users/:id', () => {
-    test('The user id must be an integer', async () => {
-      const response = await request(app).get(`/users/Invalid`)
-      expect(response.statusCode).toBe(400)
-      expect(response.body.success).toBe(false)
-      const contentType = response.headers['content-type']
-      expect(contentType).toContain('application/json')
-      expect(response.body).toHaveProperty('fails')
-      expect(Array.isArray(response.body.fails.user_id)).toBe(true)
-      expect(response.body.user).toBeUndefined()
-      expect(response.body.message).toBe('Validation failed')
-      expect(Array.isArray(response.body.fails.user_id)).toBe(true)
-      expect(response.body.fails.user_id).toContain(
-        'The user id must be an integer.'
-      )
-      expect(response.body).toHaveProperty('message')
-    })
+  describe('[POST] /users (token)', () => {
+    test('Token is required.', async () => {
+      const response = await generateUser({
+        token: '',
+      })
 
-    test('The user with the requested identifier does not exist.', async () => {
-      const response = await request(app).get(`/users/0`)
-      expect(response.statusCode).toBe(404)
-      expect(response.body.success).toBe(false)
-      const contentType = response.headers['content-type']
-      expect(contentType).toContain('application/json')
-      expect(response.body).toHaveProperty('fails')
-      expect(Array.isArray(response.body.fails.user_id)).toBe(true)
-      expect(response.body.user).toBeUndefined()
-      expect(response.body.message).toBe(
-        'The user with the requested identifier does not exist.'
-      )
-      expect(Array.isArray(response.body.fails.user_id)).toBe(true)
-      expect(response.body.fails.user_id).toEqual(['User not found.'])
-      expect(response.body).toHaveProperty('message')
+      console.log(response.body)
+      expect(response.status).toBe(401)
+
+      expect(JSON.parse(response.text)).toEqual({
+        success: false,
+        message: 'Token is required.',
+      })
+    })
+    test('Token is expired.', async () => {
+      const expireTokenRequest = await generateUser({
+        token:
+          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjoxNjkyNTIwMDE5MDU2LCJpYXQiOjE2OTI1MjAwMTksImV4cCI6MTY5MjUyMjQxOX0.xR9nNhuDeS6ePNGdR3I9hDs6YkljEaIRyGugCpSZHWk',
+      })
+      const response = await generateUser({
+        token:
+          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjoxNjkyNTIwMDE5MDU2LCJpYXQiOjE2OTI1MjAwMTksImV4cCI6MTY5MjUyMjQxOX0.xR9nNhuDeS6ePNGdR3I9hDs6YkljEaIRyGugCpSZHWk',
+      })
+
+      console.log(response.body)
+      expect(response.status).toBe(401)
+
+      expect(JSON.parse(response.text)).toEqual({
+        success: false,
+        message: 'Token is expired.',
+      })
     })
   })
-  describe('[GET] /positions ', () => {
-    xtest('Positions not found.', async () => {
-      //?
-      const response = await request(app).get(`/positions`)
-      expect(response.statusCode).toBe(422)
-      expect(response.body.success).toBe(false)
-      const contentType = response.headers['content-type']
-      expect(contentType).toContain('application/json')
-      expect(response.body).toHaveProperty('message')
-      expect(response.body.message).toBe('Positions not found.')
+
+  describe('[POST] /users', () => {
+    test('The email must be a valid email address according to RFC2822.', async () => {
+      const response = await generateUser({ email: 'test@mail' })
+      expect(response.status).toBe(422)
+      expect(JSON.parse(response.text)).toEqual({
+        success: false,
+        message: 'Validation failed',
+        fails: {
+          email: [
+            'The email must be a valid email address according to RFC2822.',
+          ],
+        },
+      })
     })
-    xtest('Page not found.', async () => {
-      //?
-      const response = await request(app).get(`/positions`)
-      expect(response.statusCode).toBe(404)
-      expect(response.body.success).toBe(false)
-      const contentType = response.headers['content-type']
-      expect(contentType).toContain('application/json')
-      expect(response.body).toHaveProperty('message')
-      expect(response.body.message).toBe('Page not found.')
+    test('The phone number should start with the code of Ukraine (+380).', async () => {
+      const response = await generateUser({ phone: '+385731828194' })
+      expect(response.status).toBe(422)
+      expect(JSON.parse(response.text)).toEqual({
+        success: false,
+        message: 'Validation failed',
+        fails: {
+          phone: [
+            'The phone number should start with the code of Ukraine (+380).',
+          ],
+        },
+      })
     })
+    test('The phone number is required.', async () => {
+      const response = await generateUser({ phone: '' })
+      expect(response.status).toBe(422)
+      expect(JSON.parse(response.text)).toEqual({
+        success: false,
+        message: 'Validation failed',
+        fails: {
+          phone: ['The phone number is required.'],
+        },
+      })
+    })
+    test('The name must be at least 2 characters.', async () => {
+      const response = await generateUser({ name: 'W' })
+      expect(response.status).toBe(422)
+      expect(JSON.parse(response.text)).toEqual({
+        success: false,
+        message: 'Validation failed',
+        fails: {
+          name: ['The name must be at least 2 characters.'],
+        },
+      })
+    })
+    test('The name must not exceed 60 characters.', async () => {
+      const response = await generateUser({ name: `'A'${'a'.repeat(60)}` })
+      expect(response.status).toBe(422)
+      expect(JSON.parse(response.text)).toEqual({
+        success: false,
+        message: 'Validation failed',
+        fails: {
+          name: ['The name must not exceed 60 characters.'],
+        },
+      })
+    })
+    test('The position id must be an integer.', async () => {
+      const response = await generateUser({ position_id: 'Security' })
+      expect(response.status).toBe(422)
+      expect(JSON.parse(response.text)).toEqual({
+        success: false,
+        message: 'Validation failed',
+        fails: {
+          position_id: ['The position id must be an integer.'],
+        },
+      })
+    })
+    test('The photo is required.', async () => {
+      const response = await generateUser({ photo: '' })
+      expect(response.status).toBe(422)
+      expect(JSON.parse(response.text)).toEqual({
+        success: false,
+        message: 'Validation failed',
+        fails: {
+          photo: ['The photo is required.'],
+        },
+      })
+    })
+    test('The photo should be in JPG/JPEG format.', async () => {
+      const response = await generateUser({ imageFormat: 'png' })
+      expect(response.status).toBe(422)
+      expect(JSON.parse(response.text)).toEqual({
+        success: false,
+        message: 'Validation failed',
+        fails: {
+          photo: ['The photo should be in JPG/JPEG format.'],
+        },
+      })
+    })
+    test('The photo dimensions must be 84x84 pixels.', async () => {
+      const response = await generateUser({ imageWidth: 95, imageHeight: 95 })
+      expect(response.status).toBe(422)
+      expect(JSON.parse(response.text)).toEqual({
+        success: false,
+        message: 'Validation failed',
+        fails: {
+          photo: ['The photo dimensions must be 84x84 pixels.'],
+        },
+      })
+    })
+
+    xtest('Invalid image format.', async () => {
+      const response = await generateUser({ imageFormat: 'gif' })
+      expect(response.status).toBe(422)
+      expect(JSON.parse(response.text)).toEqual({
+        success: false,
+        message: 'Validation failed',
+        fails: {
+          photo: ['Invalid image format.'],
+        },
+      })
+    })
+    xtest('The photo size must not exceed 5MB.', async () => {
+      const response = await generateUser({
+        imageWidth: 2456,
+        imageHeight: 1336,
+      })
+      expect(response.status).toBe(422)
+      expect(JSON.parse(response.text)).toEqual({
+        success: false,
+        message: 'Validation failed',
+        fails: {
+          photo: ['The photo size must not exceed 5MB.'],
+        },
+      })
+    })
+    test('User with this (phone) or email already exist', async () => {
+      const response = await generateUser({ phone: '+380900071441' })
+      expect(response.status).toBe(409)
+      expect(JSON.parse(response.text)).toEqual({
+        success: false,
+        message: 'User with this phone or email already exist',
+      })
+    })
+    test('User with this phone or (email) already exist', async () => {
+      const response = await generateUser({ email: 'raymundo92@yahoo.com' })
+      expect(response.status).toBe(409)
+      expect(JSON.parse(response.text)).toEqual({
+        success: false,
+        message: 'User with this phone or email already exist',
+      })
+    })
+  })
+})
+describe('[GET] users/:id', () => {
+  test('The user id must be an integer', async () => {
+    const response = await request(app).get(`/users/Invalid`)
+    expect(response.statusCode).toBe(400)
+    expect(response.body.success).toBe(false)
+    const contentType = response.headers['content-type']
+    expect(contentType).toContain('application/json')
+    expect(response.body).toHaveProperty('fails')
+    expect(Array.isArray(response.body.fails.user_id)).toBe(true)
+    expect(response.body.user).toBeUndefined()
+    expect(response.body.message).toBe('Validation failed')
+    expect(Array.isArray(response.body.fails.user_id)).toBe(true)
+    expect(response.body.fails.user_id).toContain(
+      'The user id must be an integer.'
+    )
+    expect(response.body).toHaveProperty('message')
+  })
+
+  test('The user with the requested identifier does not exist.', async () => {
+    const response = await request(app).get(`/users/0`)
+    expect(response.statusCode).toBe(404)
+    expect(response.body.success).toBe(false)
+    const contentType = response.headers['content-type']
+    expect(contentType).toContain('application/json')
+    expect(response.body).toHaveProperty('fails')
+    expect(Array.isArray(response.body.fails.user_id)).toBe(true)
+    expect(response.body.user).toBeUndefined()
+    expect(response.body.message).toBe(
+      'The user with the requested identifier does not exist.'
+    )
+    expect(Array.isArray(response.body.fails.user_id)).toBe(true)
+    expect(response.body.fails.user_id).toEqual(['User not found.'])
+    expect(response.body).toHaveProperty('message')
+  })
+})
+describe('[GET] /positions ', () => {
+  xtest('Positions not found.', async () => {
+    //?
+    const response = await request(app).get(`/positions`)
+    expect(response.statusCode).toBe(422)
+    expect(response.body.success).toBe(false)
+    const contentType = response.headers['content-type']
+    expect(contentType).toContain('application/json')
+    expect(response.body).toHaveProperty('message')
+    expect(response.body.message).toBe('Positions not found.')
+  })
+  xtest('Page not found.', async () => {
+    //?
+    const response = await request(app).get(`/positions`)
+    expect(response.statusCode).toBe(404)
+    expect(response.body.success).toBe(false)
+    const contentType = response.headers['content-type']
+    expect(contentType).toContain('application/json')
+    expect(response.body).toHaveProperty('message')
+    expect(response.body.message).toBe('Page not found.')
   })
 })
