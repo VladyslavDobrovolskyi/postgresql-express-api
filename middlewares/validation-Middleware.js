@@ -43,11 +43,11 @@ const validateFields = [
       .substring(req.file.originalname.lastIndexOf('.'))
     const mimeType = req.file.mimetype
 
-    if (!allowedExtensions.includes(fileExtension)) {
-      throw new Error('The photo should be in JPG/JPEG format.')
-    }
     if (!allowedMimeTypes.includes(mimeType)) {
       throw new Error('Invalid image format.')
+    }
+    if (!allowedExtensions.includes(fileExtension)) {
+      throw new Error('The photo should be in JPG/JPEG format.')
     }
     if (req.file.size > allowedSize) {
       throw new Error('The photo size must not exceed 5MB.')
