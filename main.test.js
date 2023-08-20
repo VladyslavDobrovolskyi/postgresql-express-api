@@ -250,8 +250,6 @@ describe('Negative Testing:', () => {
       const response = await generateUser({
         token: '',
       })
-
-      console.log(response.body)
       expect(response.status).toBe(401)
 
       expect(JSON.parse(response.text)).toEqual({
@@ -268,8 +266,6 @@ describe('Negative Testing:', () => {
         token:
           'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjoxNjkyNTIwMDE5MDU2LCJpYXQiOjE2OTI1MjAwMTksImV4cCI6MTY5MjUyMjQxOX0.xR9nNhuDeS6ePNGdR3I9hDs6YkljEaIRyGugCpSZHWk',
       })
-
-      console.log(response.body)
       expect(response.status).toBe(401)
 
       expect(JSON.parse(response.text)).toEqual({
