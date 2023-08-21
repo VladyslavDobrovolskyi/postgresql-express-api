@@ -3,7 +3,7 @@ const { faker } = require('@faker-js/faker')
 const axios = require('axios')
 const app = 'http://localhost:3000'
 
-generateUser = async ({
+async function generateUserAndDoRequest({
   token = 'Generate',
   name = 'Fake',
   email = 'Fake',
@@ -13,7 +13,7 @@ generateUser = async ({
   imageWidth,
   imageHeight,
   imageFormat,
-} = {}) => {
+} = {}) {
   const userName = name === 'Fake' ? faker.person.firstName() : name
   const userEmail =
     email === 'Fake' ? faker.internet.email().toLowerCase() : email
@@ -61,38 +61,4 @@ generateUser = async ({
   return response
 }
 
-describe('[POST] /users (token)', () => {
-  test('Token is expired.', async () => {
-    const expireTokenRequest = await generateUser({
-      token:
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjoxNjkyNTIwMDE5MDU2LCJpYXQiOjE2OTI1MjAwMTksImV4cCI6MTY5MjUyMjQxOX0.xR9nNhuDeS6ePNGdR3I9hDs6YkljEaIRyGugCpSZHWk',
-    })
-    const response = await generateUser({
-      token:
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjoxNjkyNTIwMDE5MDU2LCJpYXQiOjE2OTI1MjAwMTksImV4cCI6MTY5MjUyMjQxOX0.xR9nNhuDeS6ePNGdR3I9hDs6YkljEaIRyGugCpSZHWk',
-    })
-
-    console.log(response.body)
-    expect(response.status).toBe(401)
-
-    expect(JSON.parse(response.text)).toEqual({
-      success: false,
-      message: 'Token is expired.',
-    })
-  })
-})
-describe('[POST] /users (token)', () => {
-  test('Token is required.', async () => {
-    const response = await generateUser({
-      token: '',
-    })
-
-    console.log(response.body)
-    expect(response.status).toBe(401)
-
-    expect(JSON.parse(response.text)).toEqual({
-      success: false,
-      message: 'Token is required.',
-    })
-  })
-})
+module.exports = generateUserAndDoRequest

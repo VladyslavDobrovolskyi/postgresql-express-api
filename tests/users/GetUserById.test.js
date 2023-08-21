@@ -1,24 +1,19 @@
-const request = require('supertest')
-const app = 'http://localhost:3000'
-const id = Math.floor(Math.random() * 35) + 1
+const { app, request, userRange } = require('../settings')
 
 describe('[GET] /users/:id', () => {
   test('Validating /users/:id endpoint response', async () => {
-    const response = await request(app).get(`/users/${id}`)
-    const responseBody = response.body
+    const response = await request(app).get(
+      `/users/${Math.floor(Math.random() * userRange) + 1}`
+    )
 
     expect(response.status).toBe(200)
 
     const contentType = response.headers['content-type']
     expect(contentType).toContain('application/json')
 
-    expect(responseBody.success).toBeDefined()
-    const successStatus = responseBody.success
-    expect(successStatus).toBe(true)
+    expect(response.body.success).toBe(true)
 
-    const user = responseBody.user
-    expect(typeof user).toBe('object')
-
+    const user = response.body.user
     expect(user).toHaveProperty('id')
     expect(user).toHaveProperty('name')
     expect(user).toHaveProperty('email')

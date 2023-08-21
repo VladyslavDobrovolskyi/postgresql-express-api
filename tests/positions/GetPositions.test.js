@@ -1,8 +1,7 @@
-const request = require('supertest')
-const app = 'http://localhost:3000'
+const { app, request } = require('../settings')
 
 describe('[GET] /positions', () => {
-  test('Validating /positions endpoint response', async () => {
+  test('Validating the response of the /positions endpoint', async () => {
     const response = await request(app).get('/positions')
 
     expect(response.statusCode).toBe(200)
@@ -10,11 +9,9 @@ describe('[GET] /positions', () => {
     const contentType = response.headers['content-type']
     expect(contentType).toContain('application/json')
 
-    const responseBody = response.body
-    expect(responseBody.success).toBeDefined()
-    expect(responseBody.success).toBe(true)
+    expect(response.body.success).toBe(true)
 
-    const positions = responseBody.positions
+    const positions = response.body.positions
     expect(Array.isArray(positions)).toBe(true)
 
     positions.forEach(position => {
