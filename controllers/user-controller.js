@@ -23,7 +23,7 @@ class UserController {
         success: false,
         message: 'Validation failed',
         fails: {
-          user_id: ['The user id must be an integer.'],
+          user_id: ['The user id must be an integer.'], //вынести в мидлвар-валидатор
         },
       })
     }
