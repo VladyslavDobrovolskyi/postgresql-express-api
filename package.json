@@ -8,7 +8,7 @@
     "start": "node index.js",
     "dev": "nodemon index.js",
     "test": "jest",
-    "create-user": "node ./helpers/users-generation.js"
+    "create-user": "node ./tests/Functions/createUser.js"
   },
   "repository": {
     "type": "git",
