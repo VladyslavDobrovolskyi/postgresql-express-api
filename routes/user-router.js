@@ -1,15 +1,14 @@
-const Router = require('express').Router
-const router = new Router()
+import { Router } from 'express'
+import UserController from '../controllers/user-controller.js'
+import imageSaveMiddleware from '../middlewares/image-save-Middleware.js'
+import imageUploadMiddleware from '../middlewares/image-upload-Middleware.js'
+import paginationMiiddleware from '../middlewares/pagination-Middleware.js'
+import pagValidationMiddleware from '../middlewares/pagvalidation-Middleware.js'
+import tokenMiddleware from '../middlewares/token-Middleware.js'
+import uniqueEmailNumberMiddleware from '../middlewares/uniqueEmailNumber-Middleware.js'
+import validationMiddleware from '../middlewares/validation-Middleware.js'
 
-const UserController = require('../controllers/user-controller')
-
-const tokenMiddleware = require('../middlewares/token-Middleware')
-const uniqueEmailNumberMiddleware = require('../middlewares/uniqueEmailNumber-Middleware')
-const imageUploadMiddleware = require('../middlewares/image-upload-Middleware')
-const imageSaveMiddleware = require('../middlewares/image-save-Middleware')
-const validationMiddleware = require('../middlewares/validation-Middleware')
-const paginationMiiddleware = require('../middlewares/pagination-Middleware')
-const pagValidationMiddleware = require('../middlewares/pagvalidation-Middleware')
+const router = Router()
 
 router.get(
   '/',
@@ -27,4 +26,4 @@ router.post('/', [
   UserController.createUser,
 ])
 
-module.exports = router
+export default router

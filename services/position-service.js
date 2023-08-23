@@ -1,4 +1,4 @@
-const db = require('../helpers/db-connect')
+import db from '../helpers/db-connect.js'
 
 class PositionService {
   async getPositions() {
@@ -7,9 +7,9 @@ class PositionService {
       return fetchedPositionsData.rows
     } catch (error) {
       console.error('Failed to fetch positions:', error)
-      throw new Error('Page not found.') //?
+      throw new Error('Page not found.')
     }
   }
 }
 
-module.exports = new PositionService()
+export default new PositionService()

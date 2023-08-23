@@ -1,12 +1,11 @@
-const UserService = require('../services/user-service')
-const TokenService = require('../services/token-service')
+import UserService from '../services/user-service.js'
 
 class UserController {
   async getUsers(req, res) {
     const { count, offset, page } = req.pagination
     try {
       const users = await UserService.getUsers(count, offset, page)
-      if (users.success == false) {
+      if (users.success === false) {
         res.status(404)
       }
       res.json(users)
@@ -61,4 +60,5 @@ class UserController {
     }
   }
 }
-module.exports = new UserController()
+
+export default new UserController()

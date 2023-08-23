@@ -1,10 +1,10 @@
-const db = require('../helpers/db-connect')
+import db from '../helpers/db-connect.js'
 
-async function uniqueEmailNumber(req, res, next) {
+export default async function uniqueEmailNumber(req, res, next) {
   const { email, phone } = req.body
   try {
     const user = await db.query(
-      'SELECT * FROM users WHERE email = $1 OR phone = $2 LIMIT 1;', //TODO обработчик ошибок на этот запрос?
+      'SELECT * FROM users WHERE email = $1 OR phone = $2 LIMIT 1;',
       [email, phone]
     )
     if (user.rowCount > 0) {
@@ -21,5 +21,3 @@ async function uniqueEmailNumber(req, res, next) {
   }
   next()
 }
-
-module.exports = uniqueEmailNumber

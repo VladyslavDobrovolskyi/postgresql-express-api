@@ -1,6 +1,7 @@
-const request = require('supertest')
-const { faker } = require('@faker-js/faker')
-const axios = require('axios')
+import { faker } from '@faker-js/faker'
+import axios from 'axios'
+import request from 'supertest'
+
 const app = 'http://localhost:3000'
 
 async function generateUserAndDoRequest({
@@ -61,4 +62,4 @@ async function generateUserAndDoRequest({
   return response
 }
 
-module.exports = generateUserAndDoRequest
+export default generateUserAndDoRequest

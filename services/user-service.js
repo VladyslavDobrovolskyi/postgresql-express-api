@@ -1,4 +1,4 @@
-const db = require('../helpers/db-connect')
+import db from '../helpers/db-connect.js'
 
 class UserService {
   async createUser({
@@ -15,6 +15,7 @@ class UserService {
     )
     return CreatedUserData.rows[0]
   }
+
   async getUsers(count, offset, page) {
     try {
       const totalUsers = await db.query('SELECT COUNT(*) FROM users')
@@ -46,19 +47,19 @@ class UserService {
 
       const result = await db.query(
         `SELECT
-      users.id,
-      users.name,
-      users.email,
-      users.phone,
-      positions.name AS position,
-      positions.id AS position_id,
-      registration_timestamp,
-      users.photo
-    FROM
-      users
-      JOIN positions ON users.position_id = positions.id
-    ORDER BY registration_timestamp ASC
-    LIMIT $1 OFFSET $2`,
+          users.id,
+          users.name,
+          users.email,
+          users.phone,
+          positions.name AS position,
+          positions.id AS position_id,
+          registration_timestamp,
+          users.photo
+        FROM
+          users
+          JOIN positions ON users.position_id = positions.id
+        ORDER BY registration_timestamp ASC
+        LIMIT $1 OFFSET $2`,
         [count, offset ? offset : startIndex]
       )
 
@@ -91,21 +92,22 @@ class UserService {
   async getUserById(id) {
     const fetchedUserData = await db.query(
       `SELECT
-    users.id,
-    users.name,
-    users.email,
-    users.phone,
-    positions.id AS position_id,
-    positions.name AS position,
-    users.photo
-  FROM
-    users
-    JOIN positions ON users.position_id = positions.id
-  WHERE
-    users.id = ${id};`
+        users.id,
+        users.name,
+        users.email,
+        users.phone,
+        positions.id AS position_id,
+        positions.name AS position,
+        users.photo
+      FROM
+        users
+        JOIN positions ON users.position_id = positions.id
+      WHERE
+        users.id = $1;`,
+      [id]
     )
     return fetchedUserData.rows[0]
   }
 }
 
-module.exports = new UserService()
+export default new UserService()

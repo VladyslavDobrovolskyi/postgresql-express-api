@@ -1,4 +1,5 @@
-const generateUserAndDoRequest = require('../Functions/generateUserAndDoRequest')
+import generateUserAndDoRequest from '../Functions/generateUserAndDoRequest.js'
+
 describe('[POST] /users', () => {
   test('The photo is required.', async () => {
     const response = await generateUserAndDoRequest({ photo: '' })

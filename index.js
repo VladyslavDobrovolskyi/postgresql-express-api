@@ -1,11 +1,11 @@
-const { PORT, HOST } = require('./config')
+import express from 'express'
+import { HOST, PORT } from './config.js'
 
-const express = require('express')
 const app = express()
 
-const TokenRouter = require('./routes/token-router')
-const UserRouter = require('./routes/user-router')
-const PositionRouter = require('./routes/position-router')
+import PositionRouter from './routes/position-router.js'
+import TokenRouter from './routes/token-router.js'
+import UserRouter from './routes/user-router.js'
 
 app.use(express.static('public'))
 app.use(express.json())

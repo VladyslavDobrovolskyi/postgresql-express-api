@@ -1,4 +1,4 @@
-const { app, request } = require('../settings')
+import { app, request } from '../settings.js'
 
 describe('[GET] /users/?page= ', () => {
   test('The page must be an integer.', async () => {

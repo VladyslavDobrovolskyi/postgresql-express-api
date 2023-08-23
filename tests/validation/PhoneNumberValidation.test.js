@@ -1,4 +1,5 @@
-const generateUserAndDoRequest = require('../Functions/generateUserAndDoRequest')
+import generateUserAndDoRequest from '../Functions/generateUserAndDoRequest.js'
+
 describe('[POST] /users', () => {
   test('The phone number should start with the code of Ukraine (+380).', async () => {
     const response = await generateUserAndDoRequest({ phone: '+385731828194' })

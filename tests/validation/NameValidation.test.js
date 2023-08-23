@@ -1,4 +1,5 @@
-const generateUserAndDoRequest = require('../Functions/generateUserAndDoRequest')
+import generateUserAndDoRequest from '../Functions/generateUserAndDoRequest.js'
+
 describe('[POST] /users', () => {
   test('The name must be at least 2 characters.', async () => {
     const response = await generateUserAndDoRequest({ name: 'W' })

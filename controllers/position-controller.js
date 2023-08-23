@@ -1,4 +1,4 @@
-const PositionService = require('../services/position-service')
+import PositionService from '../services/position-service.js'
 
 class PositionController {
   async getPositions(req, res) {
@@ -17,4 +17,4 @@ class PositionController {
   }
 }
 
-module.exports = new PositionController()
+export default new PositionController()

@@ -1,4 +1,5 @@
-const generateUserAndDoRequest = require('../Functions/generateUserAndDoRequest')
+import generateUserAndDoRequest from '../Functions/generateUserAndDoRequest.js'
+
 describe('[POST] /users', () => {
   test('User with this (phone) or email already exist', async () => {
     const response = await generateUserAndDoRequest({ phone: '+380900071441' })

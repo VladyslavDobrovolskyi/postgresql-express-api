@@ -1,7 +1,8 @@
-const jwt = require('jsonwebtoken')
-const { TOKEN_ACCESS_SECRET } = require('../config')
-const TokenService = require('../services/token-service')
-function validateToken(req, res, next) {
+import jwt from 'jsonwebtoken'
+import { TOKEN_ACCESS_SECRET } from '../config.js'
+import TokenService from '../services/token-service.js'
+
+export default function validateToken(req, res, next) {
   const { token } = req.headers
   if (!token) {
     return res
@@ -10,7 +11,7 @@ function validateToken(req, res, next) {
   }
 
   try {
-    jwt.verify(token, TOKEN_ACCESS_SECRET) //TODO  Можно вынести функцию в TokenService
+    jwt.verify(token, TOKEN_ACCESS_SECRET)
     TokenService.useToken(token)
     next()
   } catch (error) {
@@ -19,5 +20,3 @@ function validateToken(req, res, next) {
       .json({ success: false, message: 'Token is expired.' })
   }
 }
-
-module.exports = validateToken

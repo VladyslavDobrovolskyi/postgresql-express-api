@@ -1,4 +1,5 @@
-const generateUserAndDoRequest = require('../Functions/generateUserAndDoRequest')
+import generateUserAndDoRequest from '../Functions/generateUserAndDoRequest.js'
+
 describe('[POST] /users', () => {
   test('The position id must be an integer.', async () => {
     const response = await generateUserAndDoRequest({ position_id: 'Security' })

@@ -1,4 +1,5 @@
-const { app, request } = require('../settings')
+import { app, request } from '../settings.js'
+
 describe('[GET] /users/:id', () => {
   test('The user id must be an integer', async () => {
     const response = await request(app).get(`/users/Invalid`)

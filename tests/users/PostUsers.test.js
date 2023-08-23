@@ -1,4 +1,4 @@
-const generateUserAndDoRequest = require('../Functions/generateUserAndDoRequest')
+import generateUserAndDoRequest from '../Functions/generateUserAndDoRequest.js'
 
 describe('[POST] /users', () => {
   test('Validating /users endpoint response', async () => {

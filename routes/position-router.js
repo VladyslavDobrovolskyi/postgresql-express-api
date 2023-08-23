@@ -1,7 +1,8 @@
-const PositionController = require('../controllers/position-Controller')
-const Router = require('express').Router
-const router = new Router()
+import { Router } from 'express'
+import PositionController from '../controllers/position-Controller.js'
+
+const router = Router()
 
 router.get('/', PositionController.getPositions)
 
-module.exports = router
+export default router

@@ -1,8 +1,8 @@
-const { IMG_PATH } = require('../config')
-const fs = require('fs')
-const crypto = require('crypto')
+import crypto from 'crypto'
+import fs from 'fs'
+import { IMG_PATH } from '../config.js'
 
-module.exports = function () {
+export default function () {
   return function (req, res, next) {
     if (req.file) {
       try {

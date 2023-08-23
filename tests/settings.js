@@ -1,5 +1,3 @@
-module.exports = {
-  app: 'http://localhost:3000',
-  request: require('supertest'),
-  userRange: 35,
-}
+export const app = 'http://localhost:3000'
+export const request = require('supertest')
+export const userRange = 35

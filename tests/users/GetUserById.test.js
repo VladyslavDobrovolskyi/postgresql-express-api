@@ -1,4 +1,4 @@
-const { app, request, userRange } = require('../settings')
+import { app, request, userRange } from '../settings.js'
 
 describe('[GET] /users/:id', () => {
   test('Validating /users/:id endpoint response', async () => {

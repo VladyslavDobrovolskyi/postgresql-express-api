@@ -1,4 +1,4 @@
-const { app, request } = require('../settings')
+import { app, request } from '../settings.js'
 describe('[GET] /users/:id', () => {
   test('The user with the requested identifier does not exist.', async () => {
     const response = await request(app).get(`/users/0`)

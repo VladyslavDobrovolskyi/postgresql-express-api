@@ -1,4 +1,4 @@
-const TokenService = require('../services/token-service')
+import TokenService from '../services/token-service.js'
 
 class TokenController {
   async getToken(req, res) {
@@ -11,4 +11,4 @@ class TokenController {
   }
 }
 
-module.exports = new TokenController()
+export default new TokenController()

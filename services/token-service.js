@@ -1,6 +1,7 @@
-const { TOKEN_ACCESS_SECRET } = require('../config')
-const jwt = require('jsonwebtoken')
-const TokenStorage = new Set() //INFO При перезагрузке сервера сторейдж сбрасывается и можно зарегистрировать еще раз на токен, но если он не протух
+import jwt from 'jsonwebtoken'
+import { TOKEN_ACCESS_SECRET } from '../config.js'
+
+const TokenStorage = new Set()
 
 class TokenService {
   async generateToken(payload = Date.now()) {
@@ -9,11 +10,14 @@ class TokenService {
     })
     return token
   }
+
   useToken(token) {
     if (!TokenStorage.has(token)) {
       TokenStorage.add(token)
-    } else throw new Error('Token expired.')
+    } else {
+      throw new Error('Token expired.')
+    }
   }
 }
 
-module.exports = new TokenService()
+export default new TokenService()

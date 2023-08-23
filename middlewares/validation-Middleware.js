@@ -1,5 +1,5 @@
-const { check, validationResult } = require('express-validator')
-const sharp = require('sharp')
+import { check, validationResult } from 'express-validator'
+import sharp from 'sharp'
 
 const validateFields = [
   check('name')
@@ -54,8 +54,8 @@ const validateFields = [
     }
     const image = sharp(req.file.buffer)
     const metadata = await image.metadata()
-    const maxWidth = 84 //? 70
-    const maxHeight = 84 //? 70
+    const maxWidth = 84
+    const maxHeight = 84
     const imageWidth = metadata.width
     const imageHeight = metadata.height
 
@@ -88,4 +88,4 @@ const validateFields = [
   },
 ]
 
-module.exports = validateFields
+export default validateFields

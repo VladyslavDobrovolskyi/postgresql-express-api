@@ -1,4 +1,4 @@
-const { query, validationResult } = require('express-validator')
+import { query, validationResult } from 'express-validator'
 
 const validateFields = [
   query('count')
@@ -38,4 +38,4 @@ const validateFields = [
   },
 ]
 
-module.exports = validateFields
+export default validateFields

@@ -1,4 +1,4 @@
-function paginateResults(req, res, next) {
+export default function paginateResults(req, res, next) {
   const { count, offset, page } = req.query
 
   req.pagination = {
@@ -9,5 +9,3 @@ function paginateResults(req, res, next) {
 
   next()
 }
-
-module.exports = paginateResults
