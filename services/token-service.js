@@ -3,19 +3,22 @@ import { TOKEN_ACCESS_SECRET } from '../config.js'
 
 class TokenService {
   constructor() {
-    this.TokenStorage = new Set()
+    this.tokenStorage = new Set()
   }
 
-  async generateToken(payload = Date.now()) {
+  generateToken(payload = Date.now()) {
     const token = jwt.sign({ payload }, TOKEN_ACCESS_SECRET, {
       expiresIn: '40m',
     })
     return token
   }
+  verifyToken(token) {
+    jwt.verify(token, TOKEN_ACCESS_SECRET)
+  }
 
   useToken(token) {
-    if (!this.TokenStorage.has(token)) {
-      this.TokenStorage.add(token)
+    if (!this.tokenStorage.has(token)) {
+      this.tokenStorage.add(token)
     } else {
       throw new Error('Token expired.')
     }

@@ -1,12 +1,13 @@
 import TokenService from '../services/token-service.js'
 
 class TokenController {
-  async getToken(req, res) {
+  getToken(req, res) {
     try {
-      const token = await TokenService.generateToken()
+      const token = TokenService.generateToken()
       res.json({ success: true, token })
     } catch (error) {
-      console.log(error.message) // TODO Internal Server Error
+      console.error('Error:', error)
+      res.status(500).json({ success: false, message: 'Internal Server Error' })
     }
   }
 }

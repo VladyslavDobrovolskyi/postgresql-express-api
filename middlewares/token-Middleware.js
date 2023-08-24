@@ -1,5 +1,3 @@
-import jwt from 'jsonwebtoken'
-import { TOKEN_ACCESS_SECRET } from '../config.js'
 import TokenService from '../services/token-service.js'
 
 export default function validateToken(req, res, next) {
@@ -11,7 +9,7 @@ export default function validateToken(req, res, next) {
   }
 
   try {
-    jwt.verify(token, TOKEN_ACCESS_SECRET)
+    TokenService.verifyToken(token)
     TokenService.useToken(token)
     next()
   } catch (error) {
