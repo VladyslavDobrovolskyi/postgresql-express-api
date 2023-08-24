@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import PositionController from '../controllers/position-Controller.js'
+import PositionController from '../controllers/position-controller.js'
 
 const router = Router()
 

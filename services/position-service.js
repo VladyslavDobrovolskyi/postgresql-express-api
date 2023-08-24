@@ -6,8 +6,8 @@ class PositionService {
       const fetchedPositionsData = await db.query(`SELECT * FROM positions`)
       return fetchedPositionsData.rows
     } catch (error) {
-      console.error('Failed to fetch positions:', error)
-      throw new Error('Page not found.')
+      console.log('Error:', error)
+      throw new Error('Internal Server Error.')
     }
   }
 }
