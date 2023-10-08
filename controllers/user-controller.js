@@ -50,7 +50,7 @@ class UserController {
   async createUser(req, res) {
     try {
       const { id } = await UserService.createUser(req.body)
-      res.status(200).json({
+      res.status(201).json({
         success: true,
         user_id: id,
         message: 'New user successfully registered',
