@@ -1,9 +1,9 @@
 # Описание API:
-**REST API**, реализованный на Express и подключенный к базе данных posgreSQL с помощью библиотеки pg, предоставляет возможность клиентским приложениям выполнять операции CRUD (create, read, update, delete) с данными в базе данных, используя HTTP-запросы. 
+**REST API**, реализованный на `express` и подключенный к базе данных `PosgreSQL` с помощью библиотеки `pg`, предоставляет возможность клиентским приложениям регистрировать пользователя в базе данных используя HTTP-запросы, а так же получать их из базы с параметрами `пагинации`. Реализована валидация данных c помощью `express-validator` и доступ к POST-запросу по одноразовому `jwt` токену. Ключевая особенность это валидация изображения, которая происходит без сохранения файла на сервер для реализации этого была использована библиотека `multer`. В проекте присутствуют тесты, которые покрывают представленный функционал с помощью библиотек `jest` и `supertest`.
 
-**tags:** `Node.js` `Express` `Express-validator`  `PostgreSQL` `JWT` `Jest`  
+**tags:** `Node.js` `Express` `Express-Validator`  `PostgreSQL` `JWT` `Jest`  
 
-**features:** `Одноразовый токен для выполнения POST-запроса` `Валидация текстовых данных` `Валидация изображения` `Пагинация` `API-тестирование`
+**features:** `Пагинация` `Одноразовый токен для выполнения POST-запроса` `Валидация текстовых данных` `Валидация изображения`  `API-тестирование`
 
 --- 
 ### 🟢 GET `/token`
@@ -267,4 +267,34 @@
         ]
     }
 }
+```
+### Структура тестов: 
+```
+├── Functions
+|  ├── createUser.js - (Функция запуска generateUserAndDoReques() и вывода результата в консоль)
+|  └── generateUserAndDoRequest.js (Функция создания пользователя. Используется во множестве тестов.)
+├── pagination
+|  ├── CountPagination.test.js (Проверки: The count must be an integer, The count must be at least 1, The count may not be greater than 100)  
+|  └── PagePagination.test.js (Проверки: The page must be an integer, The page must be at least 1, Page not found)
+├── positions
+|  ├── GetPositions.test.js (Проверки: Get positions)
+|  ├── PositionPageNotFound.test.js (Проверки: Page not found)
+|  └── PositionsNotFound.test.js (Проверки: Positions not found.)
+├── token
+|  ├── GetToken.test.js (Проверки: Get Token)
+|  ├── TokenExpired.test.js (Проверки: Token is expired)
+|  └── TokenRequired.test.js Проверки: Tokent is required)
+├── users
+|  ├── GetUserById.test.js (Get user by id)
+|  ├── GetUsers.test.js (Get users)
+|  ├── PostUsers.test.js (Create user)
+|  ├── UserIdMustBeAnInteger.test.js (The user id must be an integer)
+|  └── UserWithReqIdentDoesNotExist.test.js (The user with the requested identifier does not exist.)
+└── validation
+   ├── EmailValidation.test.js (The email must be a valid email address according to RFC2822)
+   ├── NameValidation.test.js (The name must be at least 2 characters, The name must not exceed 60 characters)
+   ├── PhoneNumberValidation.test.js (The phone number is required, The phone number should start with the code of Ukraine (+380))
+   ├── PhotoValidation.test.js (The photo is required, The photo should be in JPG/JPEG format, The photo dimensions must be 84x84 pixels, Invalid image format, The photo size must not exceed 5MB)
+   ├── PositionIdValidation.test.js (The position id must be an integer)
+   └── UserExistenceValidation.test.js (User with this (phone) or email already exist, User with this phone or (email) already exist)
 ```
