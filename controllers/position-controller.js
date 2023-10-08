@@ -8,7 +8,7 @@ class PositionController {
       if (positions.length > 0)
         res.json({ success: true, positions: positions })
       else
-        res.status(422).json({
+        res.status(410).json({
           success: false,
           message: 'Positions not found.',
         })
