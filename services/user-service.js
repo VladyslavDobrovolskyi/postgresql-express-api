@@ -65,19 +65,22 @@ class UserService {
 
       const users = result.rows
 
+      const hasOffset = offset ? true : false
+
       if (users.length > 0) {
-        return {
+        const response = {
           success: true,
           total_pages: totalPages,
           total_users: totalCount,
           count: users.length,
-          page,
+          ...(hasOffset ? { offset } : { page }),
           links: {
             next_url: nextPage,
             prev_url: prevPage,
           },
           users,
         }
+        return response
       } else {
         return {
           success: false,
