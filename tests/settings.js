@@ -1,4 +1,7 @@
 import { HOST, PORT } from '../config.js'
-export const app = `${HOST}:${PORT}`
-export const request = require('supertest')
+import supertest from 'supertest'
+// export const app = `https://frontend-test-assignment-api.abz.agency/api/v1`
+export const app = `http://${HOST}:${PORT}`
+
+export const request = supertest
 export const userRange = 35
