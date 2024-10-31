@@ -1,17 +1,25 @@
 import dotenv from 'dotenv'
+
+// Загружаем переменные окружения из .env файла
 dotenv.config()
 
-const HOST = process.env.HOST || '127.0.0.1'
-const PORT = process.env.PORT || 3000
+// Задаем значения для хоста и порта приложения
+const HOST = process.env.APP_HOST || '127.0.0.1' // Используем APP_HOST вместо HOST
+const PORT = process.env.APP_PORT || 3000 // Используем APP_PORT вместо PORT
 const TOKEN_ACCESS_SECRET = process.env.TOKEN_ACCESS_SECRET
-const IMG_PATH = `http://${process.env.HOST}:${process.env.PORT}/images/users/`
+
+// Формируем путь к изображениям
+const IMG_PATH = `http://${HOST}:${PORT}/images/users/`
+
+// Конфигурация базы данных
 const DB_CONFIG = {
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  host: process.env.DB_HOST,
-  port: process.env.DB_PORT,
-  database: process.env.DB_NAME,
-  parseInt8: true,
+	user: process.env.POSTGRES_USER,
+	password: process.env.POSTGRES_PASSWORD,
+	host: process.env.DB_HOST || 'database', // Предполагаем, что имя контейнера с PostgreSQL - 'database'
+	port: process.env.DB_PORT || 5432, // Устанавливаем значение по умолчанию для порта
+	database: process.env.POSTGRES_DB,
+	parseInt8: true,
 }
 
+// Экспортируем переменные для использования в других частях приложения
 export { DB_CONFIG, HOST, IMG_PATH, PORT, TOKEN_ACCESS_SECRET }
