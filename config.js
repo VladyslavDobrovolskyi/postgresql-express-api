@@ -15,8 +15,8 @@ const IMG_PATH = `http://${HOST}:${PORT}/images/users/`
 const DB_CONFIG = {
 	user: process.env.POSTGRES_USER,
 	password: process.env.POSTGRES_PASSWORD,
-	host: process.env.DB_HOST || 'database', // Предполагаем, что имя контейнера с PostgreSQL - 'database'
-	port: process.env.DB_PORT || 5432, // Устанавливаем значение по умолчанию для порта
+	host: process.env.POSTGRES_HOST || 'database', // Предполагаем, что имя контейнера с PostgreSQL - 'database'
+	port: process.env.POSTGRES_PORT || 5432, // Устанавливаем значение по умолчанию для порта
 	database: process.env.POSTGRES_DB,
 	parseInt8: true,
 }
