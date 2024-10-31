@@ -47,7 +47,6 @@ async function generateUserAndDoRequest({
 		  })
 		: ''
 
-	console.log(userToken)
 	const response = await request(app)
 		.post('/users')
 		.set('Token', userToken)
@@ -58,7 +57,6 @@ async function generateUserAndDoRequest({
 		.field('email', data.userEmail)
 		.field('phone', data.userPhone)
 		.field('position_id', data.userPosition_id)
-
 	return response
 }
 
