@@ -1,6 +1,8 @@
 services:
     application:
         image: node:18
+        depends_on:
+            - database
         working_dir: /usr/src/app
         volumes:
             - .:/usr/src/app
@@ -8,7 +10,8 @@ services:
             - '${APP_PORT}:${APP_PORT}'
         environment:
             - DATABASE_URL=${DATABASE_URL}
-        command: npm start
+        command: sh -c "npm run start"
+        # & ./create-n-users.sh & npm run start "
     database:
         image: postgres:latest
         restart: always
